@@ -1,0 +1,36 @@
+#!/bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+END='\033[0m' # No Color
+
+function red {
+    printf "${RED}$@${END}\n"
+}
+
+function green {
+    printf "${GREEN}$@${END}\n"
+}
+
+# Script installs package from AUR
+
+if [[ $# -eq 0 ]] ; then
+    echo $(red 'You did not provide the link to repository!')
+    exit 0
+else
+    LINK=$1
+fi
+
+# TODO: if no link, let user know
+
+# clone the repository
+cd $HOME/packages/  && git clone $LINK
+
+# Asserts that link ends with slash
+PACKAGE_DIR=${LINK%.*}
+PACKAGE_DIR=${PACKAGE_DIR##*/}
+PACKAGE_DIR=$HOME/packages/$PACKAGE_DIR
+
+cd $PACKAGE_DIR && makepkg -si
+
+echo $(green 'Successfully installed package!')
