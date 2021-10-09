@@ -21,7 +21,7 @@ else
     LINK=$1
 fi
 
-# TODO: if no link, let user know
+# TODO: if link is in fact not a link, let user know
 
 # clone the repository
 cd $HOME/packages/  && git clone $LINK
